@@ -2,15 +2,18 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>E Chartr UI</title>
+<title>E Chartr</title>
+
+<!-- Icons -->
+<link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 
 <style>
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: #e5e5e5;
+  font-family: 'Segoe UI', sans-serif;
+  background: #eaeaea;
 }
 
 .app {
@@ -18,60 +21,115 @@ body {
   margin: auto;
   background: #fff;
   min-height: 100vh;
-  position: relative;
-
-  padding-bottom: 70px; /* space for navbar */
+  padding-bottom: 75px;
 }
 
-/* Header */
+/* HEADER */
 .header {
   background: #e6d9c7;
   padding: 15px;
 }
 
-.header h2 {
-  margin: 0;
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
+.logo {
+  font-weight: bold;
+  font-size: 20px;
+  color: #2c4a8a;
+}
+
+.wallet {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.wallet span {
+  background: #fff;
+  padding: 5px 10px;
+  border-radius: 10px;
+}
+
+/* SEARCH */
 .search {
-  margin-top: 9px;
+  margin-top: 12px;
+  background: #fff;
+  border-radius: 25px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
 }
 
 .search input {
-  width: 100%;
-  padding: 10px;
-  border-radius: 20px;
   border: none;
+  outline: none;
+  width: 100%;
+  margin-left: 8px;
 }
 
-/* Cards */
+/* SECTION TITLE */
+.section {
+  padding: 10px;
+  font-size: 12px;
+  color: #777;
+}
+
+/* CARDS */
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 12px;
   padding: 10px;
 }
 
 .card {
   background: #fff;
-  padding: 20px;
   border-radius: 15px;
+  padding: 15px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  text-align: center;
   cursor: pointer;
+  position: relative;
 }
 
-/* Nearby list */
+.card i {
+  font-size: 28px;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  color: #888;
+}
+
+.card h4 {
+  margin: 0;
+  font-size: 14px;
+}
+
+/* LIST */
 .list {
   padding: 10px;
 }
 
 .item {
-  padding: 12px;
-  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
 }
 
-/* Button */
+.item-left {
+  display: flex;
+  gap: 10px;
+}
+
+.item-left i {
+  color: green;
+}
+
+/* BUTTON */
 .main-btn {
   margin: 10px;
   padding: 15px;
@@ -80,56 +138,70 @@ body {
   background: #3b6cb7;
   color: white;
   border-radius: 10px;
-  font-size: 16px;
+  font-size: 15px;
 }
 
-/* Bottom Nav */
+/* FEATURED */
+.banner {
+  margin: 10px;
+  border-radius: 15px;
+  overflow: hidden;
+  position: relative;
+}
+
+.banner img {
+  width: 100%;
+}
+
+.banner-text {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  color: white;
+  font-weight: bold;
+}
+
+/* NAVBAR */
 .nav {
   position: fixed;
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-
   width: 100%;
   max-width: 420px;
-
+  background: #fff;
   display: flex;
   justify-content: space-around;
-  align-items: center;
-
-  padding: 10px 0;
-  background: #fff;
-
+  padding: 8px 0;
   border-top: 1px solid #ddd;
-  z-index: 1000;
 }
 
 .nav button {
   background: none;
   border: none;
-  font-size: 12px;
-  color: #555;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 11px;
+  color: #777;
 }
 
-.nav button:active {
+.nav i {
+  font-size: 20px;
+}
+
+.nav .active {
   color: #3b6cb7;
 }
 
-/* Pages */
+/* PAGES */
 .page {
   display: none;
   padding: 20px;
 }
 
-.active {
+.active-page {
   display: block;
-}
-
-/* Desktop view */
-@media (min-width: 500px) {
-  body {
-    background: black;
-  }
 }
 </style>
 </head>
@@ -138,66 +210,120 @@ body {
 
 <div class="app">
 
-  <!-- HOME PAGE -->
-  <div id="homePage" class="active">
+<!-- HOME -->
+<div id="homePage" class="active-page">
 
-    <div class="header">
-      <h2>E Chartr</h2>
-      <div class="search">
-        <input type="text" placeholder="Where are you going?">
+  <div class="header">
+    <div class="topbar">
+      <div class="logo">E Chartr</div>
+      <div class="wallet">
+        <span>₹0.0</span>
+        <i class="ri-user-line"></i>
       </div>
     </div>
 
-    <div class="grid">
-      <div class="card" onclick="openPage('busPage')">Bus Tickets</div>
-      <div class="card" onclick="openPage('metroPage')">Metro Ticket</div>
-      <div class="card" onclick="alert('Bus Pass')">Bus Pass</div>
-      <div class="card" onclick="alert('Route Info')">Route Info</div>
-      <div class="card" onclick="alert('All Services')">All Services</div>
+    <div class="search">
+      <i class="ri-map-pin-line"></i>
+      <input type="text" placeholder="Where are you going?">
+      <i class="ri-search-line"></i>
+    </div>
+  </div>
+
+  <div class="section">YOUR TRAVEL KIT</div>
+
+  <div class="grid">
+    <div class="card" onclick="openPage('busPage')">
+      <h4>Bus Tickets</h4>
+      <i class="ri-bus-line"></i>
     </div>
 
-    <div class="list">
-      <div class="item">Harswaroop Colony</div>
-      <div class="item">Ansal Villa / Dera More</div>
+    <div class="card" onclick="openPage('metroPage')">
+      <h4>Metro Ticket</h4>
+      <i class="ri-train-line"></i>
     </div>
 
-    <button class="main-btn" onclick="alert('Nearby Stops')">
-      Show all nearby stops
-    </button>
+    <div class="card" onclick="alert('Bus Pass')">
+      <h4>Bus Pass</h4>
+      <i class="ri-ticket-line"></i>
+    </div>
 
+    <div class="card" onclick="alert('Route Info')">
+      <h4>Route Info</h4>
+      <i class="ri-map-2-line"></i>
+    </div>
+
+    <div class="card" onclick="alert('All Services')">
+      <h4>All Services</h4>
+      <i class="ri-apps-line"></i>
+    </div>
   </div>
 
-  <!-- METRO PAGE -->
-  <div id="metroPage" class="page">
-    <h2>Metro Ticket</h2>
-    <p>Metro booking UI here</p>
+  <div class="section">AROUND YOU</div>
+
+  <div class="list">
+    <div class="item">
+      <div class="item-left">
+        <i class="ri-bus-line"></i>
+        <div>
+          <strong>Harswaroop Colony</strong><br>
+          <small>Towards Fatehpur Beri</small>
+        </div>
+      </div>
+      <span>118m</span>
+    </div>
   </div>
 
-  <!-- BUS PAGE -->
-  <div id="busPage" class="page">
-    <h2>Bus Tickets</h2>
-    <p>Bus booking UI here</p>
-  </div>
+  <button class="main-btn">Show all nearby stops</button>
 
-  <!-- BOTTOM NAV -->
-  <div class="nav">
-    <button onclick="openPage('homePage')">Home</button>
-    <button onclick="alert('Nearby')">Nearby</button>
-    <button onclick="openPage('busPage')">Ticket</button>
-    <button onclick="alert('Help')">Help</button>
+  <div class="section">FEATURED FOR YOU</div>
+
+  <div class="banner">
+    <img src="https://images.unsplash.com/photo-1589394815804-964ed0be2eb5">
+    <div class="banner-text">Metro Ticket Available 🎉</div>
   </div>
 
 </div>
 
+<!-- METRO PAGE -->
+<div id="metroPage" class="page">
+  <h2>Metro Ticket Page</h2>
+</div>
+
+<!-- BUS PAGE -->
+<div id="busPage" class="page">
+  <h2>Bus Ticket Page</h2>
+</div>
+
+<!-- NAVBAR -->
+<div class="nav">
+  <button class="active" onclick="switchTab(this,'homePage')">
+    <i class="ri-home-5-line"></i>Home
+  </button>
+  <button onclick="switchTab(this,'metroPage')">
+    <i class="ri-map-pin-line"></i>Nearby
+  </button>
+  <button onclick="switchTab(this,'busPage')">
+    <i class="ri-ticket-line"></i>Ticket
+  </button>
+  <button onclick="alert('Help')">
+    <i class="ri-question-line"></i>Help
+  </button>
+</div>
+
+</div>
+
 <script>
-function openPage(pageId) {
-  let pages = document.querySelectorAll(".page, #homePage");
-
-  pages.forEach(function(p) {
-    p.classList.remove("active");
+function openPage(pageId){
+  document.querySelectorAll('.page, #homePage').forEach(p=>{
+    p.classList.remove('active-page');
   });
+  document.getElementById(pageId).classList.add('active-page');
+}
 
-  document.getElementById(pageId).classList.add("active");
+function switchTab(btn,page){
+  document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  openPage(page);
 }
 </script>
 
