@@ -13,7 +13,6 @@ body {
   font-family: sans-serif;
 }
 
-/* App container */
 .app {
   max-width: 420px;
   margin: auto;
@@ -24,29 +23,52 @@ body {
 /* Screens */
 .screen {
   display: none;
-  height: 100%;
-  overflow-y: auto;
   position: relative;
-   padding-bottom: 80px;
+  padding-bottom: 80px;
 }
 
 .screen.active {
   display: block;
 }
 
-/* Main images */
 .main-img {
   width: 100%;
   display: block;
+  position: relative;
+  z-index: 1;
+}
+
+/* Overlay inputs */
+.box {
+  width: 45px;
+  height: 45px;
+  text-align: center;
+  font-size: 18px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  background: transparent;
+}
+
+.route-input {
+  position: absolute;
+  height: 45px;
+  border-radius: 10px;
+  border: none;
+  padding: 10px;
+  font-size: 16px;
+  background: transparent;
+  outline: none;
 }
 
 /* Click areas */
 .click {
   position: absolute;
   cursor: pointer;
+  z-index: 500;
+
 }
 
-/* Fixed Navbar Image */
+/* Navbar */
 .navbar {
   position: fixed;
   bottom: 0;
@@ -54,15 +76,13 @@ body {
   transform: translateX(-50%);
   width: 100%;
   max-width: 420px;
-  z-index: 1000;
+  z-index: 100;
 }
 
 .navbar img {
   width: 100%;
-  display: block;
 }
 
-/* Navbar Click Layer */
 .nav-click {
   position: fixed;
   bottom: 0;
@@ -71,7 +91,7 @@ body {
   width: 100%;
   max-width: 420px;
   height: 70px;
-  z-index: 2000;
+  z-index: 200;
 }
 
 .nav-btn {
@@ -80,13 +100,12 @@ body {
   height: 100%;
 }
 
-/* DEBUG MODE */
+/* DEBUG */
 /*
 .click, .nav-btn {
   background: rgba(255,0,0,0.3);
 }
 */
-
 </style>
 </head>
 
@@ -94,62 +113,192 @@ body {
 
 <div class="app">
 
-  <!-- HOME SCREEN -->
+  <!-- ================= HOME ================= -->
   <div id="home" class="screen active">
     <img src="images/home.png" class="main-img">
 
-    <!-- Travel Kit -->
-    <div class="click" style="top:260px; left:15px; width:170px; height:100px;" onclick="go('bus')"></div>
-    <div class="click" style="top:260px; right:15px; width:170px; height:100px;" onclick="go('metro')"></div>
-
-    <div class="click" style="top:380px; left:15px; width:170px; height:100px;" onclick="alert('Bus Pass')"></div>
-    <div class="click" style="top:380px; right:15px; width:170px; height:100px;" onclick="alert('Route Info')"></div>
-
-    <!-- Nearby Button -->
-    <div class="click" style="top:520px; left:15px; width:390px; height:50px;" onclick="alert('Nearby Stops')"></div>
+    <div class="click" style="top:180px; left:15px; width:120px; height:120px;" onclick="go('busEntry')"></div>
   </div>
 
-  <!-- METRO SCREEN -->
-  <div id="metro" class="screen">
-    <img src="images/metro.png" class="main-img">
 
-    <!-- Back -->
-    <div class="click" style="top:20px; left:10px; width:60px; height:60px;" onclick="go('home')"></div>
+  <!-- ================= BUS ENTRY SCREEN ================= -->
+  <div id="busEntry" class="screen">
+    <img src="images/bus-entry.png" class="main-img">
+
+    <!-- Bus number boxes -->
+    <div style="position:absolute; top:260px; left:60px; display:flex; gap:15px;">
+      <input class="box" maxlength="1" id="b1">
+      <input class="box" maxlength="1" id="b2">
+      <input class="box" maxlength="1" id="b3">
+      <input class="box" maxlength="1" id="b4">
+    </div>
+
+    <!-- Route input -->
+    <input id="routeInput" class="route-input"
+           placeholder="e.g. 534"
+           style="top:480px; left:25px; width:370px;">
+
+    <!-- Click areas -->
+    <div class="click" style="top:220px; left:10px; width:400px; height:200px;" onclick="submitBus()"></div>
+    <div class="click" style="top:460px; left:10px; width:400px; height:180px;" onclick="submitRoute()"></div>
   </div>
 
-  <!-- BUS SCREEN -->
-  <div id="bus" class="screen">
-    <img src="images/bus.png" class="main-img">
 
-    <!-- Back -->
-    <div class="click" style="top:20px; left:10px; width:60px; height:60px;" onclick="go('home')"></div>
+  <!-- ================= NEXT STEP (STOPS SELECTION) ================= -->
+  <div id="ticketForm" class="screen">
+    <img src="images/ticket-form.png" class="main-img">
 
-    <!-- Book Ticket -->
-    <div class="click" style="bottom:140px; left:20px; width:380px; height:60px;" onclick="alert('Ticket Booked')"></div>
+    <!-- FROM DROPDOWN -->
+    <select id="fromStop"
+            style="position:absolute; top:220px; left:20px; width:170px; height:40px;">
+      <option>Select From</option>
+      <option>Stop A</option>
+      <option>Stop B</option>
+    </select>
+
+    <!-- TO DROPDOWN -->
+    <select id="toStop"
+            style="position:absolute; top:220px; right:20px; width:170px; height:40px;">
+      <option>Select To</option>
+      <option>Stop C</option>
+      <option>Stop D</option>
+    </select>
+
+    <!-- BUY BUTTON -->
+    <div class="click"
+         style="top:300px; left:20px; width:380px; height:60px;"
+         onclick="buyTicket()">
+    </div>
+
   </div>
 
-  <!-- FIXED NAVBAR -->
-  <div class="navbar">
-    <img src="images/navbar.png">
-  </div>
 
-  <!-- NAV CLICK OVERLAY -->
-  <div class="nav-click">
-    <div class="nav-btn" style="left:0%" onclick="go('home')"></div>
-    <div class="nav-btn" style="left:25%" onclick="alert('Nearby')"></div>
-    <div class="nav-btn" style="left:50%" onclick="go('bus')"></div>
-    <div class="nav-btn" style="left:75%" onclick="alert('Help')"></div>
+  <!-- ================= TICKET VIEW ================= -->
+  <div id="ticketView" class="screen">
+    <img src="images/ticket-view.png" class="main-img">
+
+    <div id="ticketData"
+         style="position:absolute; top:200px; left:20px; color:black;">
+    </div>
   </div>
 
 </div>
 
-<script>
-function go(page) {
-  document.querySelectorAll(".screen").forEach(screen => {
-    screen.classList.remove("active");
-  });
 
+<!-- NAVBAR -->
+<div class="navbar">
+  <img src="images/navbar.png">
+</div>
+
+<div class="nav-click">
+  <div class="nav-btn" style="left:0%" onclick="go('home')"></div>
+  <div class="nav-btn" style="left:25%" onclick="alert('Nearby')"></div>
+  <div class="nav-btn" style="left:50%" onclick="go('ticketView')"></div>
+  <div class="nav-btn" style="left:75%" onclick="alert('Help')"></div>
+</div>
+
+
+<script>
+// Navigation
+function go(page){
+  document.querySelectorAll(".screen").forEach(s=>{
+    s.classList.remove("active");
+  });
   document.getElementById(page).classList.add("active");
+}
+
+
+// Auto move cursor
+["b1","b2","b3","b4"].forEach((id,i,arr)=>{
+  document.getElementById(id).addEventListener("input",function(){
+    if(this.value && i<3){
+      document.getElementById(arr[i+1]).focus();
+    }
+  });
+});
+
+
+// Submit Bus
+function submitBus(){
+  let bus =
+    b1.value + b2.value + b3.value + b4.value;
+
+  if(bus.length<4){
+    alert("Enter full bus number");
+    return;
+  }
+
+  localStorage.setItem("bookingData", JSON.stringify({
+    type:"bus",
+    value:bus
+  }));
+
+  go("ticketForm");
+}
+
+
+// Submit Route
+function submitRoute(){
+  let route = routeInput.value;
+
+  if(!route){
+    alert("Enter route");
+    return;
+  }
+
+  localStorage.setItem("bookingData", JSON.stringify({
+    type:"route",
+    value:route
+  }));
+
+  go("ticketForm");
+}
+
+
+// Buy Ticket
+function buyTicket(){
+
+  let from = document.getElementById("fromStop").value;
+  let to = document.getElementById("toStop").value;
+
+  if(from==="Select From" || to==="Select To"){
+    alert("Select stops");
+    return;
+  }
+
+  let booking = JSON.parse(localStorage.getItem("bookingData"));
+
+  let ticket = {
+    bus: booking.value,
+    from: from,
+    to: to,
+    fare: 20,
+    time: new Date().toLocaleString(),
+    id: "TKT"+Date.now()
+  };
+
+  localStorage.setItem("ticket", JSON.stringify(ticket));
+
+  loadTicket();
+  go("ticketView");
+}
+
+
+// Load Ticket
+function loadTicket(){
+  let t = JSON.parse(localStorage.getItem("ticket"));
+
+  if(!t) return;
+
+  document.getElementById("ticketData").innerHTML = `
+    <b>Bus:</b> ${t.bus}<br>
+    <b>From:</b> ${t.from}<br>
+    <b>To:</b> ${t.to}<br>
+    <b>Fare:</b> ₹${t.fare}<br>
+    <b>Time:</b> ${t.time}<br>
+    <b>ID:</b> ${t.id}<br>
+    <img src="images/qr.png" width="120">
+  `;
 }
 </script>
 
