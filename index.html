@@ -6,28 +6,35 @@
 
 <title>E Chartr</title>
 
-<!-- Icons -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>E Chartr Clone</title>
+
 <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 
 <style>
 body {
   margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: #eaeaea;
+  font-family: system-ui, -apple-system, sans-serif;
+  background: #e9e9e9;
 }
 
 .app {
   max-width: 420px;
   margin: auto;
-  background: #fff;
+  background: #f6f6f6;
   min-height: 100vh;
-  padding-bottom: 75px;
+  padding-bottom: 80px;
 }
 
 /* HEADER */
 .header {
-  background: #e6d9c7;
-  padding: 15px;
+  background: #e4d8c6;
+  padding: 14px;
 }
 
 .topbar {
@@ -37,9 +44,9 @@ body {
 }
 
 .logo {
-  font-weight: bold;
-  font-size: 20px;
-  color: #2c4a8a;
+  font-weight: 600;
+  font-size: 18px;
+  color: #2d4f8f;
 }
 
 .wallet {
@@ -50,74 +57,88 @@ body {
 
 .wallet span {
   background: #fff;
-  padding: 5px 10px;
-  border-radius: 10px;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 13px;
 }
 
 /* SEARCH */
 .search {
   margin-top: 12px;
   background: #fff;
-  border-radius: 25px;
-  padding: 10px;
+  border-radius: 30px;
+  padding: 10px 12px;
   display: flex;
   align-items: center;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
 }
 
 .search input {
   border: none;
   outline: none;
   width: 100%;
+  font-size: 14px;
   margin-left: 8px;
 }
 
 /* SECTION TITLE */
 .section {
-  padding: 10px;
-  font-size: 12px;
-  color: #777;
+  padding: 14px 14px 6px;
+  font-size: 11px;
+  color: #8a8a8a;
+  letter-spacing: 0.5px;
 }
 
-/* CARDS */
+/* GRID */
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
-  padding: 10px;
+  padding: 10px 12px;
 }
 
+/* CARD EXACT STYLE */
 .card {
   background: #fff;
-  border-radius: 15px;
-  padding: 15px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  cursor: pointer;
+  border-radius: 16px;
+  padding: 14px;
+  height: 85px;
   position: relative;
-}
-
-.card i {
-  font-size: 28px;
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  color: #888;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+  cursor: pointer;
 }
 
 .card h4 {
+  font-size: 13px;
   margin: 0;
-  font-size: 14px;
+  font-weight: 600;
+}
+
+.card i {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-size: 24px;
+  color: #8b8b8b;
 }
 
 /* LIST */
 .list {
-  padding: 10px;
+  background: #fff;
+  margin: 0 12px;
+  border-radius: 14px;
+  overflow: hidden;
 }
 
 .item {
   display: flex;
   justify-content: space-between;
-  padding: 12px 0;
+  padding: 12px;
   border-bottom: 1px solid #eee;
+}
+
+.item:last-child {
+  border-bottom: none;
 }
 
 .item-left {
@@ -127,38 +148,43 @@ body {
 
 .item-left i {
   color: green;
+  font-size: 18px;
 }
 
 /* BUTTON */
 .main-btn {
-  margin: 10px;
-  padding: 15px;
-  width: calc(100% - 20px);
+  margin: 12px;
+  padding: 14px;
+  width: calc(100% - 24px);
   border: none;
-  background: #3b6cb7;
+  background: #3d6cc6;
   color: white;
-  border-radius: 10px;
-  font-size: 15px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
 }
 
-/* FEATURED */
+/* BANNER */
 .banner {
-  margin: 10px;
-  border-radius: 15px;
+  margin: 12px;
+  border-radius: 14px;
   overflow: hidden;
   position: relative;
 }
 
 .banner img {
   width: 100%;
+  height: 130px;
+  object-fit: cover;
 }
 
 .banner-text {
   position: absolute;
-  top: 15px;
-  left: 15px;
+  top: 12px;
+  left: 12px;
   color: white;
-  font-weight: bold;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 /* NAVBAR */
@@ -172,7 +198,7 @@ body {
   background: #fff;
   display: flex;
   justify-content: space-around;
-  padding: 8px 0;
+  padding: 6px 0;
   border-top: 1px solid #ddd;
 }
 
@@ -182,26 +208,17 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: 11px;
-  color: #777;
+  font-size: 10px;
+  color: #8a8a8a;
 }
 
 .nav i {
   font-size: 20px;
+  margin-bottom: 2px;
 }
 
 .nav .active {
-  color: #3b6cb7;
-}
-
-/* PAGES */
-.page {
-  display: none;
-  padding: 20px;
-}
-
-.active-page {
-  display: block;
+  color: #3d6cc6;
 }
 </style>
 </head>
@@ -210,104 +227,64 @@ body {
 
 <div class="app">
 
-<!-- HOME -->
-<div id="homePage" class="active-page">
-
-  <div class="header">
-    <div class="topbar">
-      <div class="logo">E Chartr</div>
-      <div class="wallet">
-        <span>₹0.0</span>
-        <i class="ri-user-line"></i>
-      </div>
-    </div>
-
-    <div class="search">
-      <i class="ri-map-pin-line"></i>
-      <input type="text" placeholder="Where are you going?">
-      <i class="ri-search-line"></i>
+<div class="header">
+  <div class="topbar">
+    <div class="logo">E Chartr</div>
+    <div class="wallet">
+      <span>₹0.0</span>
+      <i class="ri-user-line"></i>
     </div>
   </div>
 
-  <div class="section">YOUR TRAVEL KIT</div>
+  <div class="search">
+    <i class="ri-map-pin-line"></i>
+    <input placeholder="Where are you going?">
+    <i class="ri-search-line"></i>
+  </div>
+</div>
 
-  <div class="grid">
-    <div class="card" onclick="openPage('busPage')">
-      <h4>Bus Tickets</h4>
+<div class="section">YOUR TRAVEL KIT</div>
+
+<div class="grid">
+  <div class="card"><h4>Bus Tickets</h4><i class="ri-bus-line"></i></div>
+  <div class="card"><h4>Metro Ticket</h4><i class="ri-train-line"></i></div>
+  <div class="card"><h4>Bus Pass</h4><i class="ri-ticket-line"></i></div>
+  <div class="card"><h4>Route Info</h4><i class="ri-map-line"></i></div>
+  <div class="card"><h4>All Services</h4><i class="ri-apps-line"></i></div>
+</div>
+
+<div class="section">AROUND YOU</div>
+
+<div class="list">
+  <div class="item">
+    <div class="item-left">
       <i class="ri-bus-line"></i>
-    </div>
-
-    <div class="card" onclick="openPage('metroPage')">
-      <h4>Metro Ticket</h4>
-      <i class="ri-train-line"></i>
-    </div>
-
-    <div class="card" onclick="alert('Bus Pass')">
-      <h4>Bus Pass</h4>
-      <i class="ri-ticket-line"></i>
-    </div>
-
-    <div class="card" onclick="alert('Route Info')">
-      <h4>Route Info</h4>
-      <i class="ri-map-2-line"></i>
-    </div>
-
-    <div class="card" onclick="alert('All Services')">
-      <h4>All Services</h4>
-      <i class="ri-apps-line"></i>
-    </div>
-  </div>
-
-  <div class="section">AROUND YOU</div>
-
-  <div class="list">
-    <div class="item">
-      <div class="item-left">
-        <i class="ri-bus-line"></i>
-        <div>
-          <strong>Harswaroop Colony</strong><br>
-          <small>Towards Fatehpur Beri</small>
-        </div>
+      <div>
+        <strong>Harswaroop Colony</strong><br>
+        <small>Towards Fatehpur Beri</small>
       </div>
-      <span>118m</span>
     </div>
+    <span>118m</span>
   </div>
+</div>
 
-  <button class="main-btn">Show all nearby stops</button>
+<button class="main-btn">Show all nearby stops</button>
 
-  <div class="section">FEATURED FOR YOU</div>
+<div class="section">FEATURED FOR YOU</div>
 
-  <div class="banner">
-    <img src="https://images.unsplash.com/photo-1589394815804-964ed0be2eb5">
-    <div class="banner-text">Metro Ticket Available 🎉</div>
-  </div>
+<div class="banner">
+  <img src="https://images.unsplash.com/photo-1589394815804-964ed0be2eb5">
+  <div class="banner-text">Metro Ticket Available 🎉</div>
+</div>
 
 </div>
 
-<!-- METRO PAGE -->
-<div id="metroPage" class="page">
-  <h2>Metro Ticket Page</h2>
-</div>
-
-<!-- BUS PAGE -->
-<div id="busPage" class="page">
-  <h2>Bus Ticket Page</h2>
-</div>
-
-<!-- NAVBAR -->
+<!-- NAV -->
 <div class="nav">
-  <button class="active" onclick="switchTab(this,'homePage')">
-    <i class="ri-home-5-line"></i>Home
-  </button>
-  <button onclick="switchTab(this,'metroPage')">
-    <i class="ri-map-pin-line"></i>Nearby
-  </button>
-  <button onclick="switchTab(this,'busPage')">
-    <i class="ri-ticket-line"></i>Ticket
-  </button>
-  <button onclick="alert('Help')">
-    <i class="ri-question-line"></i>Help
-  </button>
+  <button class="active"><i class="ri-home-5-line"></i>Home</button>
+  <button><i class="ri-map-pin-line"></i>Nearby</button>
+  <button><i class="ri-ticket-line"></i>Ticket</button>
+  <button><i class="ri-question-line"></i>Help</button>
 </div>
 
 </div>
