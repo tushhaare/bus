@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>E Chartr UI</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #e5e5e5;
+}
+
+.app {
+  max-width: 420px;
+  margin: auto;
+  background: #fff;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Header */
+.header {
+  background: #e6d9c7;
+  padding: 15px;
+}
+
+.header h2 {
+  margin: 0;
+}
+
+.search {
+  margin-top: 10px;
+}
+
+.search input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 20px;
+  border: none;
+}
+
+/* Cards */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 10px;
+}
+
+.card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  text-align: center;
+  cursor: pointer;
+}
+
+/* Nearby list */
+.list {
+  padding: 10px;
+}
+
+.item {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Button */
+.main-btn {
+  margin: 10px;
+  padding: 15px;
+  width: calc(100% - 20px);
+  border: none;
+  background: #3b6cb7;
+  color: white;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+/* Bottom Nav */
+.nav {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+  background: #fff;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  max-width: 420px;
+  border-top: 1px solid #ddd;
+}
+
+.nav button {
+  background: none;
+  border: none;
+  font-size: 12px;
+}
+
+/* Pages */
+.page {
+  display: none;
+  padding: 20px;
+}
+
+.active {
+  display: block;
+}
+
+/* Desktop view */
+@media (min-width: 500px) {
+  body {
+    background: black;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- HOME PAGE -->
+  <div id="homePage" class="active">
+
+    <div class="header">
+      <h2>E Chartr</h2>
+      <div class="search">
+        <input type="text" placeholder="Where are you going?">
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card" onclick="openPage('busPage')">Bus Tickets</div>
+      <div class="card" onclick="openPage('metroPage')">Metro Ticket</div>
+      <div class="card" onclick="alert('Bus Pass')">Bus Pass</div>
+      <div class="card" onclick="alert('Route Info')">Route Info</div>
+      <div class="card" onclick="alert('All Services')">All Services</div>
+    </div>
+
+    <div class="list">
+      <div class="item">Harswaroop Colony</div>
+      <div class="item">Ansal Villa / Dera More</div>
+    </div>
+
+    <button class="main-btn" onclick="alert('Nearby Stops')">
+      Show all nearby stops
+    </button>
+
+  </div>
+
+  <!-- METRO PAGE -->
+  <div id="metroPage" class="page">
+    <h2>Metro Ticket</h2>
+    <p>Metro booking UI here</p>
+  </div>
+
+  <!-- BUS PAGE -->
+  <div id="busPage" class="page">
+    <h2>Bus Tickets</h2>
+    <p>Bus booking UI here</p>
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <div class="nav">
+    <button onclick="openPage('homePage')">Home</button>
+    <button onclick="alert('Nearby')">Nearby</button>
+    <button onclick="openPage('busPage')">Ticket</button>
+    <button onclick="alert('Help')">Help</button>
+  </div>
+
+</div>
+
+<script>
+function openPage(pageId) {
+  let pages = document.querySelectorAll(".page, #homePage");
+
+  pages.forEach(function(p) {
+    p.classList.remove("active");
+  });
+
+  document.getElementById(pageId).classList.add("active");
+}
+</script>
+
+</body>
+</html>
