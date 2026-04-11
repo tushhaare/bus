@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Bus Entry</title>
+
+<style>
+body {
+  margin: 0;
+  background: black;
+  font-family: sans-serif;
+}
+
+.app {
+  max-width: 420px;
+  margin: auto;
+  position: relative;
+}
+
+/* Image */
+.main-img {
+  width: 100%;
+  display: block;
+}
+
+/* Bus number boxes */
+.box {
+  width: 32px;
+  height: 40px;
+  text-align: center;
+  font-size: 15px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  background: transparent;
+}
+
+/* Route input */
+.route-input {
+  position: absolute;
+  height: 45px;
+  border-radius: 10px;
+  border: none;
+  padding: 10px;
+  font-size: 16px;
+  background: transparent;
+  outline: none;
+}
+
+/* Click button */
+.btn {
+  position: absolute;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- Background Screenshot -->
+  <img src="images/bus-entry.png" class="main-img">
+
+  <!-- BUS INPUT -->
+  <div style="position:absolute; top:220px; left:45px; display:flex; gap:10px;">
+    <input class="box" maxlength="1" id="b1">
+    <input class="box" maxlength="1" id="b2">
+    <input class="box" maxlength="1" id="b3">
+    <input class="box" maxlength="1" id="b4">
+    <input class="box" maxlength="1" id="b5">
+    <input class="box" maxlength="1" id="b6">
+    <input class="box" maxlength="1" id="b7">
+  </div>
+
+  <!-- ROUTE INPUT -->
+  <input id="routeInput"
+         class="route-input"
+         placeholder="e.g. 534"
+         style="top:472px; left:40px; width:370px;">
+<input id="towardsInput"
+       placeholder="towards"
+       style="
+         position:absolute;
+         top:610px;
+         left:40px;
+         width:240px;
+         font-size:17px;
+         color:#555;
+       ">
+
+       
+
+<div id="nextBtn"
+     style="
+       position: fixed;
+       bottom: 20px;
+       left: 50%;
+       transform: translateX(-50%);
+       width: 90%;
+       max-width: 380px;
+       height: 55px;
+       background: #2aa7a9;
+       color: white;
+       text-align: center;
+       line-height: 55px;
+       border-radius: 12px;
+       font-size: 18px;
+       display: none;
+       z-index: 1000;
+     "
+     onclick="goNext()">
+  Next
+</div>
+
+<script>
+
+// ================= AUTO MOVE CURSOR =================
+let boxes = ["b1","b2","b3","b4","b5","b6","b7"];
+
+boxes.forEach((id, i) => {
+  document.getElementById(id).addEventListener("input", function () {
+    if (this.value && i < boxes.length - 1) {
+      document.getElementById(boxes[i + 1]).focus();
+    }
+    checkInput();
+  });
+});
+
+// ================= CHECK INPUT =================
+function checkInput(){
+
+  let bus = boxes.map(id => document.getElementById(id).value).join("");
+  let route = document.getElementById("routeInput").value.trim();
+  let towards = document.getElementById("towardsInput").value.trim();
+
+  if(bus.length === 7 || route.length >= 2 || towards.length >= 2){
+    document.getElementById("nextBtn").style.display = "block";
+  } else {
+    document.getElementById("nextBtn").style.display = "none";
+  }
+}
+
+// Listeners
+document.getElementById("routeInput").addEventListener("input", checkInput);
+document.getElementById("towardsInput").addEventListener("input", checkInput);
+
+// ================= NEXT BUTTON =================
+function goNext(){
+
+  let bus = boxes.map(id => document.getElementById(id).value).join("");
+  let route = document.getElementById("routeInput").value.trim();
+  let towards = document.getElementById("towardsInput").value.trim();
+
+  if(bus.length !== 7 && route.length < 2){
+    alert("Enter bus or route");
+    return;
+  }
+
+  let data = {
+    bus: bus.length === 7 ? bus : "",
+    route: route || "",
+    towards: towards || "",
+    type: bus.length === 7 ? "bus" : "route"
+  };
+
+  localStorage.setItem("bookingData", JSON.stringify(data));
+
+  window.location.href = "ticket-form.html";
+}
+
+</script>

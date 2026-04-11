@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AC Ticket</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial;
+  background: #00b8b7;
+  
+}
+
+.app {
+  max-width: 420px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* Top bar */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  color: white;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+/* Ticket card */
+.card {
+  background: #fff;
+  border-radius: 6px;
+  padding: 20px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+
+/* Title */
+.title {
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* Row */
+.row {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+/* Labels */
+.label {
+  color: #777;
+  font-size: 13px;
+}
+
+/* Value */
+.value {
+  font-size: 16px;
+}
+
+/* Big route */
+.route {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+/* Towards */
+.towards {
+  font-size: 13px;
+  color: #666;
+  margin-top: -5px;
+  margin-bottom: 10px;
+}
+
+/* Divider */
+hr {
+  border: none;
+  border-top: 1px solid #000000;
+  margin: 10px 0;
+}
+
+/* QR Button */
+.qr-btn {
+  border: 2px solid #4caf50;
+  color: #2e7d32;
+  padding: 12px;
+  text-align: center;
+  border-radius: 8px;
+  margin-top: 15px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* QR screen */
+.qr-screen {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+
+.qr-box {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.qr-box img {
+  width: 260px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="app" id="ticketPage">
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div>✖</div>
+    <div>⚠️ Issue with ticket?</div>
+    <div>View all tickets</div>
+  </div>
+
+  <!-- CARD -->
+  <div class="card">
+
+    <div class="title">Transport Dept. of Delhi</div>
+
+    <div class="row">
+      <div id="busNumber">DL----</div>
+      <div id="finalFare">₹0</div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+      <div>
+        <div class="label">Bus Route</div>
+        <div class="route" id="route"></div>
+        <div class="towards" id="towards"></div>
+      </div>
+      <div>
+        <div class="label">Fare</div>
+        <div class="value" id="fare"></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div>
+        <div class="label">Booking Time</div>
+        <div class="value" id="time"></div>
+      </div>
+      <div>
+        <div class="label">Tickets</div>
+        <div class="value" id="count"></div>
+      </div>
+    </div>
+
+    <div style="margin-top:10px;">
+      <div class="label">Starting stop</div>
+      <div class="value" id="from"></div>
+    </div>
+
+    <div style="margin-top:10px;">
+      <div class="label">Ending stop</div>
+      <div class="value" id="to"></div>
+    </div>
+
+    <div style="text-align:center; margin-top:15px; color:#777;" id="ticketId"></div>
+
+    <div class="qr-btn" onclick="showQR()">⛶ Show QR code</div>
+
+    <div style="text-align:center; margin-top:15px;">
+  <img src="images/ondclogo.png"
+       style="width:260px; max-width:40%; height:auto;">
+    </div>
+
+  </div>
+
+</div>
+
+<!-- QR SCREEN -->
+<div class="qr-screen" id="qrScreen" onclick="showQR()">
+    <div class="qr-box">
+    <img src="images/qrticket.png">
+  </div>
+</div>
+
+<script>
+
+const fareMap = {
+  5: 4.62,
+  10: 9.25,
+  15: 13.75,
+  20: 18.35,
+  25: 22.79
+};
+
+// LOAD DATA
+let t = JSON.parse(localStorage.getItem("ticket"));
+
+if(!t){
+  alert("No ticket found");
+}
+
+// FILL DATA
+document.getElementById("busNumber").innerText = t.bus;
+document.getElementById("route").innerText = t.route;
+document.getElementById("towards").innerText = t.towards ? "towards " + t.towards : "";
+let totalFare = parseFloat(t.fare);
+let count = parseInt(t.count) || 1;
+
+// actual per ticket
+let actualPerTicket = totalFare / count;
+
+// discounted per ticket
+let discountedPerTicket = fareMap[actualPerTicket] || actualPerTicket;
+
+// totals
+let actualTotal = actualPerTicket * count;
+let discountedTotal = discountedPerTicket * count;
+
+// display
+document.getElementById("fare").innerText = "₹" + actualTotal.toFixed(2);
+document.getElementById("finalFare").innerText = "₹" + discountedTotal.toFixed(2);
+document.getElementById("time").innerText = t.date + " | " + t.time;
+document.getElementById("count").innerText = t.count;
+document.getElementById("from").innerText = t.from;
+document.getElementById("to").innerText = t.to;
+document.getElementById("ticketId").innerText = t.id;
+
+// QR TOGGLE
+function showQR(){
+
+  let ticket = document.getElementById("ticketPage");
+  let qr = document.getElementById("qrScreen");
+
+  if(qr.style.display === "flex"){
+    qr.style.display = "none";
+    ticket.style.display = "block";
+  } else {
+    ticket.style.display = "none";
+    qr.style.display = "flex";
+  }
+}
+
+</script>
+
+</body>
+</html>
