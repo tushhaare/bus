@@ -106,5 +106,11 @@ body {
 <div class="nav-btn nav3" onclick="window.location.href='tickets.html'"></div>
 <div class="nav-btn nav4" onclick="alert('Help')"></div>
 
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("sw.js");
+}
+</script>
+  
 </body>
 </html>
