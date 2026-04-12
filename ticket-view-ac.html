@@ -229,7 +229,12 @@ let discountedTotal = discountedPerTicket * count;
 // display
 document.getElementById("fare").innerText = "₹" + actualTotal.toFixed(2);
 document.getElementById("finalFare").innerText = "₹" + discountedTotal.toFixed(2);
-document.getElementById("time").innerText = t.dateTime;
+if(t.dateTime){
+  document.getElementById("time").innerText = t.dateTime;
+} else {
+  // fallback for old tickets
+  document.getElementById("time").innerText = (t.date || "") + " | " + (t.time || "");
+}
 document.getElementById("count").innerText = t.count;
 document.getElementById("from").innerText = t.from;
 document.getElementById("to").innerText = t.to;
