@@ -833,18 +833,19 @@ let totalFare = baseFare * count;
     return;
   }
 
-  let ticket = {
+ let now = new Date();
+
+let ticket = {
   bus: "DL " + (booking.bus || ""),
   route: booking.route || "",
   towards: booking.towards || "",
   from: from,
   to: to,
-  fare: totalFare,      // total
-  baseFare: baseFare,   // per ticket
+  fare: totalFare,
+  baseFare: baseFare,
   count: count,
   busType: busType,
-  date: new Date().toLocaleDateString(),
-  time: new Date().toLocaleTimeString(),
+  dateTime: formatDateTime(now),   // ✅ NEW FORMAT
   id: "TKT" + Date.now()
 };
 
