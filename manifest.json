@@ -1,7 +1,7 @@
 {
   "name": "Chartrr",
   "short_name": "Chartrr",
-  "start_url": "/bus/index.html",
+  "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#00b8b7",
