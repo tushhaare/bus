@@ -745,6 +745,27 @@ select, input {
 
 <script>
 
+function formatDateTime(date){
+
+  const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+  let d = date.getDate().toString().padStart(2, "0");
+  let m = months[date.getMonth()];
+  let y = date.getFullYear().toString().slice(-2);
+
+  let hours = date.getHours();
+  let minutes = date.getMinutes().toString().padStart(2, "0");
+
+  let ampm = hours >= 12 ? "PM" : "AM";
+
+  hours = hours % 12;
+  if(hours === 0) hours = 12;
+
+  hours = hours.toString().padStart(2, "0");
+
+  return `${d} ${m}, ${y} | ${hours}:${minutes} ${ampm}`;
+}
+
 // ================= GLOBAL VARIABLES =================
 let count = 1;
 let busType = "Non-AC";
@@ -833,7 +854,7 @@ let totalFare = baseFare * count;
     return;
   }
 
- let now = new Date();
+  let now = new Date();
 
 let ticket = {
   bus: "DL " + (booking.bus || ""),
