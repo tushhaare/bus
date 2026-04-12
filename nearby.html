@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Nearby</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  background: black;
+}
+
+.map {
+  width: 100%;
+  height: 100vh;
+  border: none;
+}
+</style>
+</head>
+
+<body>
+
+<iframe id="mapFrame" class="map"></iframe>
+
+<script>
+
+navigator.geolocation.getCurrentPosition(function(position){
+
+  let lat = position.coords.latitude;
+  let lng = position.coords.longitude;
+
+  let url = `https://maps.google.com/maps?q=${lat},${lng}&z=15&output=embed`;
+
+  document.getElementById("mapFrame").src = url;
+
+}, function(){
+  alert("Location access denied");
+});
+
+</script>
+
+</body>
+</html>
