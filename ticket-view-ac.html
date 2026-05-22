@@ -68,13 +68,6 @@ body {
   font-weight: 600;
 }
 
-/* Towards */
-.towards {
-  font-size: 13px;
-  color: #666;
-  margin-top: -5px;
-  margin-bottom: 10px;
-}
 
 /* Divider */
 hr {
@@ -143,7 +136,6 @@ hr {
       <div>
         <div class="label">Bus Route</div>
         <div class="route" id="route"></div>
-        <div class="towards" id="towards"></div>
       </div>
       <div>
         <div class="label">Fare</div>
@@ -212,7 +204,6 @@ if(!t){
 // FILL DATA
 document.getElementById("busNumber").innerText = t.bus;
 document.getElementById("route").innerText = t.route;
-document.getElementById("towards").innerText = t.towards ? "towards " + t.towards : "";
 let totalFare = parseFloat(t.fare);
 let count = parseInt(t.count) || 1;
 
