@@ -117,62 +117,99 @@ body {
 
 <script>
 
+// ===== BUS BOXES =====
+const boxes = ["b1","b2","b3","b4","b5","b6","b7","b8"];
 
+// Auto move cursor
+boxes.forEach((id, index) => {
 
-// ================= AUTO MOVE CURSOR =================
-let boxes = ["b1","b2","b3","b4","b5","b6","b7","b8"];
+  const box = document.getElementById(id);
 
-boxes.forEach((id, i) => {
-  document.getElementById(id).addEventListener("input", function () {
-    if (this.value && i < boxes.length - 1) {
-      document.getElementById(boxes[i + 1]).focus();
+  box.addEventListener("input", function(){
+
+    this.value = this.value.toUpperCase();
+
+    if(this.value && index < boxes.length - 1){
+      document.getElementById(boxes[index + 1]).focus();
     }
+
     checkInput();
+
   });
+
 });
 
-// ================= CHECK INPUT =================
+// ===== SHOW / HIDE NEXT BUTTON =====
 function checkInput(){
 
-  let bus = boxes.map(id => document.getElementById(id).value).join("");
-  let route = document.getElementById("routeInput").value.trim();
-  let towards = document.getElementById("towardsInput").value.trim();
+  const bus = boxes
+    .map(id => document.getElementById(id).value)
+    .join("")
+    .trim();
 
-  let busLength = bus.replace(/\s/g,"").length;
+  const route = document.getElementById("routeInput").value.trim();
 
-if(busLength >= 7 || route.length >= 2){
-    document.getElementById("nextBtn").style.display = "block";
+  const nextBtn = document.getElementById("nextBtn");
+
+  if(bus.length >= 7 || route.length >= 2){
+    nextBtn.style.display = "block";
   } else {
-    document.getElementById("nextBtn").style.display = "none";
+    nextBtn.style.display = "none";
   }
+
 }
 
-// Listeners
-document.getElementById("routeInput").addEventListener("input", checkInput);
-document.getElementById("towardsInput").addEventListener("input", checkInput);
+// Route listener
+document.getElementById("routeInput")
+  .addEventListener("input", checkInput);
 
-// ================= NEXT BUTTON =================
+document.getElementById("towardsInput")
+  .addEventListener("input", checkInput);
+
+// ===== NEXT BUTTON =====
 function goNext(){
 
-  let bus = boxes.map(id => document.getElementById(id).value).join("");
-  let route = document.getElementById("routeInput").value.trim();
-  let towards = document.getElementById("towardsInput").value.trim();
+  const bus = boxes
+    .map(id => document.getElementById(id).value)
+    .join("")
+    .trim();
 
-  let busLength = bus.trim().length;
+  const route =
+    document.getElementById("routeInput").value.trim();
 
-  if((busLength < 7 || busLength > 8) && route.length < 2){
-    alert("Enter bus or route");
+  const towards =
+    document.getElementById("towardsInput").value.trim();
+
+  const validBus =
+    bus.length >= 7 && bus.length <= 8;
+
+  const validRoute =
+    route.length >= 2;
+
+  if(!validBus && !validRoute){
+    alert("Enter Bus Number or Route Number");
     return;
   }
 
-  let data = {
-    bus: (busLength >= 7 && busLength <= 8) ? bus : "",
-    route: route || "",
-    towards: towards || "",
-    type: (busLength >= 7 && busLength <= 8) ? "bus" : "route"
+  const bookingData = {
+    bus: validBus ? bus : "",
+    route: route,
+    towards: towards,
+    type: validBus ? "bus" : "route"
   };
 
-  localStorage.setItem("bookingData", JSON.stringify(data));
+  localStorage.setItem(
+    "bookingData",
+    JSON.stringify(bookingData)
+  );
+
+  console.log("Saved:", bookingData);
 
   window.location.href = "ticket-form.html";
+
 }
+
+// Initial state
+checkInput();
+
+</script>
