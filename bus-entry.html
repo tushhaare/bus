@@ -158,25 +158,21 @@ function goNext(){
   let route = document.getElementById("routeInput").value.trim();
   let towards = document.getElementById("towardsInput").value.trim();
 
-  let busLength = bus.replace(/\s/g,"").length;
+  let busLength = bus.trim().length;
 
-if((busLength < 7 || busLength > 8) && route.length < 2){
+  if((busLength < 7 || busLength > 8) && route.length < 2){
     alert("Enter bus or route");
     return;
   }
 
-  let busLength = bus.trim().length;
-
-let data = {
-  bus: (busLength >= 7 && busLength <= 8) ? bus : "",
-  route: route || "",
-  towards: towards || "",
-  type: (busLength >= 7 && busLength <= 8) ? "bus" : "route"
-};
+  let data = {
+    bus: (busLength >= 7 && busLength <= 8) ? bus : "",
+    route: route || "",
+    towards: towards || "",
+    type: (busLength >= 7 && busLength <= 8) ? "bus" : "route"
+  };
 
   localStorage.setItem("bookingData", JSON.stringify(data));
 
   window.location.href = "ticket-form.html";
 }
-
-</script>
