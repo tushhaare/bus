@@ -213,8 +213,10 @@ select, input {
 
   <!-- PAY BUTTON -->
   <div
+  id="payBtn"
   onclick="buyTicket()"
   style="
+    display: none;
     position:absolute;
     bottom:20px;
     left:20px;
@@ -223,6 +225,7 @@ select, input {
     background:red;
     opacity:0.5;
     z-index:9999;
+  
   ">
 </div>
 
@@ -230,6 +233,20 @@ select, input {
 
 <script>
 
+function checkTicketForm(){
+
+  let from = document.getElementById("fromStop").value.trim();
+  let to = document.getElementById("toStop").value.trim();
+
+  let payBtn = document.getElementById("payBtn");
+
+  if(from && to){
+    payBtn.style.display = "block";
+  } else {
+    payBtn.style.display = "none";
+  }
+}
+  
 function formatDateTime(date){
 
   const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -981,6 +998,7 @@ function setupAutocomplete(inputId, suggestionId){
       item.onclick = () => {
         input.value = stop;
         suggestionBox.innerHTML = "";
+  checkTicketForm();
       };
 
       suggestionBox.appendChild(item);
@@ -1038,4 +1056,7 @@ let ticket = {
 }
 }
 
+document.getElementById("fromStop").addEventListener("input", checkTicketForm);
+document.getElementById("toStop").addEventListener("input", checkTicketForm);
+  
 </script>
