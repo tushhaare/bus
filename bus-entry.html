@@ -72,6 +72,7 @@ body {
     <input class="box" maxlength="1" id="b5">
     <input class="box" maxlength="1" id="b6">
     <input class="box" maxlength="1" id="b7">
+    <input class="box" maxlength="1" id="b8">
   </div>
 
   <!-- ROUTE INPUT -->
@@ -119,7 +120,7 @@ body {
 
 
 // ================= AUTO MOVE CURSOR =================
-let boxes = ["b1","b2","b3","b4","b5","b6","b7"];
+let boxes = ["b1","b2","b3","b4","b5","b6","b7","b8"];
 
 boxes.forEach((id, i) => {
   document.getElementById(id).addEventListener("input", function () {
@@ -137,7 +138,9 @@ function checkInput(){
   let route = document.getElementById("routeInput").value.trim();
   let towards = document.getElementById("towardsInput").value.trim();
 
-  if(bus.length === 7 || route.length >= 2 || towards.length >= 2){
+  let busLength = bus.replace(/\s/g,"").length;
+
+if(busLength >= 7 || route.length >= 2){
     document.getElementById("nextBtn").style.display = "block";
   } else {
     document.getElementById("nextBtn").style.display = "none";
@@ -155,7 +158,9 @@ function goNext(){
   let route = document.getElementById("routeInput").value.trim();
   let towards = document.getElementById("towardsInput").value.trim();
 
-  if(bus.length !== 7 && route.length < 2){
+  let busLength = bus.replace(/\s/g,"").length;
+
+if((busLength < 7 || busLength > 8) && route.length < 2){
     alert("Enter bus or route");
     return;
   }
