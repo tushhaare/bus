@@ -165,12 +165,14 @@ if((busLength < 7 || busLength > 8) && route.length < 2){
     return;
   }
 
-  let data = {
-    bus: bus.length === 7 ? bus : "",
-    route: route || "",
-    towards: towards || "",
-    type: bus.length === 7 ? "bus" : "route"
-  };
+  let busLength = bus.trim().length;
+
+let data = {
+  bus: (busLength >= 7 && busLength <= 8) ? bus : "",
+  route: route || "",
+  towards: towards || "",
+  type: (busLength >= 7 && busLength <= 8) ? "bus" : "route"
+};
 
   localStorage.setItem("bookingData", JSON.stringify(data));
 
